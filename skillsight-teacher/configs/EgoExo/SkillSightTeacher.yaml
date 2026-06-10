@@ -1,0 +1,66 @@
+TRAIN:
+  ENABLE: True
+  DATASET: EgoExo
+  BATCH_SIZE: 8
+  EVAL_PERIOD: 19
+  CHECKPOINT_PERIOD: 19
+  AUTO_RESUME: True
+  CHECKPOINT_FILE_PATH: /path/to/egovlpv2.pth
+  FINETUNE: True
+DATA:
+  PATH_TO_DATA_DIR: ../data/ego_exo_splits/448pFull_downloaded
+  CAMERA_VIEW: "ego"
+  PATH_PREFIX: /vision/asomaya1/share/ego_exo_demonstrator_proficiency/data
+  NUM_FRAMES: 16
+  SAMPLING_RATE: 15
+  TRAIN_JITTER_SCALES: [448, 512]
+  TRAIN_CROP_SIZE: 448
+  TEST_CROP_SIZE: 448
+  INPUT_CHANNEL_NUM: [3]
+  EGO_EXO_VERSION: 'v2'
+  RANDOM_FLIP: False
+  CROP_WITH_GAZE_SIZE: 224
+TIMESFORMER:
+  ATTENTION_TYPE: 'divided_space_time'
+  PRETRAINED_MODEL: ''
+MODEL:
+  MODEL_NAME: SkillSightTeacher
+  CONCAT_RGB_FEAT: False
+  USE_GAZE_ATTENTION: True
+  IMG_MODEL: dinov2
+  GAZE_ENCODER: transformer
+  VISION_QUERY: without_time
+  USE_GAZE_SEQ: True
+  CROP_GAZE: True
+  GAZE_ATT_LAYER: first
+  GAZE_HEAD_LENGTH: 15
+  ATT_STD: 9.0
+  NUM_CLASSES: 4
+  ARCH: vit
+  LOSS_FUNC: cross_entropy
+  DROPOUT_RATE: 0.5
+SOLVER:
+  BASE_LR: 0.001
+  LR_POLICY: steps_with_relative_lrs
+  STEPS: [0, 11, 14]
+  LRS: [1, 0.1, 0.01]
+  MAX_EPOCH: 20
+  MOMENTUM: 0.9
+  WEIGHT_DECAY: 1e-4
+  OPTIMIZING_METHOD: sgd
+TEST:
+  ENABLE: True
+  DATASET: EgoExo
+  BATCH_SIZE: 8
+  NUM_ENSEMBLE_VIEWS: 10
+  NUM_SPATIAL_CROPS: 1
+  CHECKPOINT_FILE_PATH: /path/to/checkpoint_epoch_00020.pyth
+VAL:
+  ENABLE: False
+DATA_LOADER:
+  NUM_WORKERS: 4
+  PIN_MEMORY: True
+NUM_GPUS: 1
+NUM_SHARDS: 1
+RNG_SEED: 0
+OUTPUT_DIR: ./outputs/skillsight-teacher
