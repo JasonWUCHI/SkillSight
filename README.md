@@ -1,6 +1,6 @@
 # [CVPR 2026] SkillSight: Efficient First-Person Skill Assessment with Gaze
 
-This repository is the official code release for the paper **SkillSight: Efficient First-Person Skill Assessment with Gaze**. We have not finished the release yet. We will include teacher checkpoint, gaze data, env, prediction logits for each test case in 2026 June.
+This repository is the official code release for the paper **SkillSight: Efficient First-Person Skill Assessment with Gaze**. We have not finished the release yet. We will include gaze data and env in 2026 June.
 
 SkillSight uses a two-stage design:
 
@@ -32,6 +32,11 @@ data/ego_exo_splits/
 ```
 
 All split CSVs live in the shared `data/ego_exo_splits` folder. The teacher config points to this shared folder, and the student loader defaults to it as well.
+
+## Checkpoints and results
+We provide the segment prediction result for both teacher and student model in `results/`. The final prediction of a video is the sum of logits for all video segments.
+
+We provide the teacher model checkpoint here: https://utexas.box.com/s/5904eqtp59cn16dt3apx1lfq7y969vwb
 
 ## Downloads before running
 
