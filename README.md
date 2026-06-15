@@ -1,6 +1,6 @@
 # [CVPR 2026] SkillSight: Efficient First-Person Skill Assessment with Gaze
 
-This repository is the official code release for the paper **SkillSight: Efficient First-Person Skill Assessment with Gaze**. We have not finished the release yet. We will include gaze data and env in 2026 June.
+This repository is the official code release for the paper **SkillSight: Efficient First-Person Skill Assessment with Gaze**. 
 
 SkillSight uses a two-stage design:
 
@@ -16,7 +16,15 @@ processing_gaze/        # Utilities to create general_world_eye_gaze.csv
 data/                   # Lightweight metadata/split CSVs copied for convenience
 ```
 
-## Included lightweight data
+## Included data
+
+1. `Gaze data for Egoexo4D`: We preprocessed egoexo4d gaze data from the vrs file. See `processing_gaze/README.md` for how we generate `general_world_eye_gaze.csv`. It is not necessary to run processing gaze. We already provide the general_world_eye_gaze.csv. 
+
+We provide the preprocessed gaze data here: https://utexas.box.com/s/60ps6enkg000hkmlgwuuzum8z3e6wyl7
+
+Note that not all the videos have vrs file or gaze recording, and not all the videos are in the proficiency demonstrator benchmark.
+
+2. `Data split`
 
 ```text
 data/takes.json
@@ -38,21 +46,15 @@ We provide the segment prediction result for both teacher and student model in `
 
 We provide the teacher model checkpoint here: https://utexas.box.com/s/5904eqtp59cn16dt3apx1lfq7y969vwb
 
-## Downloads before running
-
-Large data/model artifacts are intentionally not included in git. Download them separately:
-
-```text
-Teacher checkpoint:      <CHECKPOINT_DOWNLOAD_URL>/checkpoint_epoch_00020.pyth
-Teacher init checkpoint: <CHECKPOINT_DOWNLOAD_URL>/egovlpv2.pth
-EgoExo4D gaze data:  <DATA_DOWNLOAD_URL>
-```
+Egovlpv2 checkpoint can be downloaded from: https://github.com/facebookresearch/EgoVLPv2/tree/main/EgoVLPv2
 
 `checkpoint_epoch_00020.pyth` is used for teacher evaluation and as the teacher checkpoint for student distillation. `egovlpv2.pth` is used as the teacher training/fine-tuning initialization checkpoint.
 
-## Gaze data
-
-See `processing_gaze/README.md` for how we generate `general_world_eye_gaze.csv`. It is not necessary to run processing gaze. We already provide the general_world_eye_gaze.csv. 
+## Environment
+```bash
+conda env create -f environment.yml
+conda activate skillsight
+```
 
 ## Expected external data layout
 
@@ -122,3 +124,13 @@ python train_distill.py \
 ```
 
 Each subfolder has its own README with more details.
+
+## Acknowledgements
+
+This repository builds on and adapts resources from the following projects and tutorials:
+
+- TimeSformer: https://github.com/facebookresearch/TimeSformer
+- Ego-Exo4D Gaze Tutorials: https://docs.ego-exo4d-data.org/tutorials/gaze/
+- Ego-Exo4D Proficiency Benchmark: https://github.com/EGO4D/ego-exo4d-proficiency
+- Project Aria Tools, MPS Data: https://github.com/facebookresearch/projectaria_tools/blob/main/README.md
+- Project Aria Tools, Eye Gaze Code Snippets: https://facebookresearch.github.io/projectaria_tools/docs/data_utilities/core_code_snippets/eye_gaze_code
